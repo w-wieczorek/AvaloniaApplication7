@@ -14,4 +14,14 @@
   <ItemGroup>
     <ProjectReference Include="..\GradeScaleApp\GradeScaleApp.csproj" />
   </ItemGroup>
+
+  <Target Name="CopyAvaloniaBrowserRuntimeFiles" AfterTargets="Publish">
+    <ItemGroup>
+      <AvaloniaRuntimeFiles Include="$(PublishDir)wwwroot\avalonia.js*" />
+      <AvaloniaRuntimeFiles Include="$(PublishDir)wwwroot\storage.js*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AvaloniaRuntimeFiles)"
+          DestinationFolder="$(PublishDir)wwwroot\_framework"
+          SkipUnchangedFiles="true" />
+  </Target>
 </Project>
