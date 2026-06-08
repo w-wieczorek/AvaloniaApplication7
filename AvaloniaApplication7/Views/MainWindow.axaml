@@ -1,0 +1,109 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaApplication7.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaApplication7.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Wizualizacja procent -> ocena"
+        Width="900"
+        Height="560">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="18">
+        <TextBlock Grid.Row="0"
+                   FontSize="20"
+                   FontWeight="SemiBold"
+                   Text="Wizualizacja oceny studenta na podstawie procentu"/>
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" Margin="0,14,0,0">
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="p_min [%]"/>
+            <TextBox Grid.Column="1"
+                     Margin="8,0,12,0"
+                     Width="90"
+                     Text="{Binding PMin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="p_max [%]"/>
+            <TextBox Grid.Column="3"
+                     Margin="8,0,12,0"
+                     Width="90"
+                     Text="{Binding PMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+
+            <TextBlock Grid.Column="4" VerticalAlignment="Center" Text="Procent studenta [%]"/>
+            <TextBox Grid.Column="5"
+                     Margin="8,0,0,0"
+                     Width="90"
+                     Text="{Binding StudentPercent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}"/>
+        </Grid>
+
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,*" Margin="0,12,0,0">
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Suwak [%]"/>
+            <Slider Grid.Column="1"
+                    Margin="12,0,0,0"
+                    Minimum="{Binding PMin}"
+                    Maximum="{Binding PMax}"
+                    Value="{Binding StudentPercent, Mode=TwoWay}"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"/>
+        </Grid>
+
+        <Grid Grid.Row="3" ColumnDefinitions="Auto,*" Margin="0,14,0,0">
+            <StackPanel Spacing="4" VerticalAlignment="Top" Margin="0,26,0,0">
+                <TextBlock FontWeight="SemiBold" Text="Wynik"/>
+                <TextBlock Text="{Binding StudentGrade, StringFormat='Ocena: {0:F2}'}"/>
+                <TextBlock Text="{Binding StudentPercent, StringFormat='Uzyskany procent: {0:F2}%'}"/>
+                <TextBlock Text="{Binding PMin, StringFormat='p_min: {0:F2}%'}"/>
+                <TextBlock Text="{Binding PMax, StringFormat='p_max: {0:F2}%'}"/>
+            </StackPanel>
+
+            <Canvas Grid.Column="1" Width="600" Height="300" Background="#0E000000">
+                <Rectangle Width="450"
+                           Height="230"
+                           Canvas.Left="70"
+                           Canvas.Top="30"
+                           Stroke="#607D8B"
+                           StrokeThickness="1"/>
+
+                <Line StartPoint="70,260" EndPoint="520,260" Stroke="Black" StrokeThickness="2"/>
+                <Line StartPoint="70,260" EndPoint="70,30" Stroke="Black" StrokeThickness="2"/>
+
+                <Line StartPoint="70,260" EndPoint="520,30" Stroke="#2E7D32" StrokeThickness="3"/>
+
+                <Line StartPoint="70,260" EndPoint="70,266" Stroke="Black" StrokeThickness="1"/>
+                <Line StartPoint="295,260" EndPoint="295,266" Stroke="Black" StrokeThickness="1"/>
+                <Line StartPoint="520,260" EndPoint="520,266" Stroke="Black" StrokeThickness="1"/>
+
+                <Line StartPoint="64,260" EndPoint="70,260" Stroke="Black" StrokeThickness="1"/>
+                <Line StartPoint="64,145" EndPoint="70,145" Stroke="Black" StrokeThickness="1"/>
+                <Line StartPoint="64,30" EndPoint="70,30" Stroke="Black" StrokeThickness="1"/>
+
+                <TextBlock Canvas.Left="58" Canvas.Top="254" Text="3"/>
+                <TextBlock Canvas.Left="58" Canvas.Top="139" Text="4"/>
+                <TextBlock Canvas.Left="58" Canvas.Top="24" Text="5"/>
+
+                <TextBlock Canvas.Left="62" Canvas.Top="270" Text="{Binding PMin, StringFormat={}{0:F1}%}"/>
+                <TextBlock Canvas.Left="282" Canvas.Top="270" Text="{Binding PMid, StringFormat={}{0:F1}%}"/>
+                <TextBlock Canvas.Left="510" Canvas.Top="270" Text="{Binding PMax, StringFormat={}{0:F1}%}"/>
+
+                <TextBlock Canvas.Left="12" Canvas.Top="10" Text="Ocena" FontWeight="SemiBold"/>
+                <TextBlock Canvas.Left="534" Canvas.Top="264" Text="Procent" FontWeight="SemiBold"/>
+
+                <Ellipse Width="10"
+                         Height="10"
+                         Fill="#C62828"
+                         Stroke="White"
+                         StrokeThickness="1"
+                         Canvas.Left="{Binding StudentPointLeft}"
+                         Canvas.Top="{Binding StudentPointTop}"/>
+            </Canvas>
+        </Grid>
+    </Grid>
+
+</Window>

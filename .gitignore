@@ -1,0 +1,18 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# JetBrains
+.idea/
+*.sln.iml
+
+# User-specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db
+
