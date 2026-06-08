@@ -1,7 +1,7 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using GradeScaleApp.ViewModels;
+using GradeScaleApp.Views;
 
 namespace GradeScaleApp;
 
@@ -9,18 +9,12 @@ public class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)
     {
-        if (param is null)
-            return null;
-
-        var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-        var type = Type.GetType(name);
-
-        if (type != null)
+        if (param is MainViewModel)
         {
-            return (Control)Activator.CreateInstance(type)!;
+            return new MainView();
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        return new TextBlock { Text = "Not Found: " + param?.GetType().FullName };
     }
 
     public bool Match(object? data)
